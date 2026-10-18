@@ -42,4 +42,4 @@ cmake -S tests -B build-tests && cmake --build build-tests && ctest --test-dir b
 
 CI builds Windows, macOS, iOS and Android on every push. The combined `.geode` file is in the **Build Output** artifact of each run.
 
-To publish a release, bump `version` in `mod.json` and `changelog.md`, then push a matching tag (for example `git tag v1.0.1 && git push origin v1.0.1`). CI builds it and attaches the `.geode` file to a GitHub Release.
+To publish a release, bump `version` in `mod.json` and `changelog.md`, then either push a matching tag (`git tag v1.0.1 && git push origin v1.0.1`) or run the **Build Geode Mod** workflow from the Actions tab with **release** ticked. CI builds the mod and attaches the `.geode` file to a GitHub Release.

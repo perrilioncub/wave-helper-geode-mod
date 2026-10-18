@@ -2,6 +2,11 @@ name: Build Geode Mod
 
 on:
   workflow_dispatch:
+    inputs:
+      release:
+        description: "Publish a GitHub Release using the version in mod.json"
+        type: boolean
+        default: false
   push:
     branches:
       - "**"
@@ -74,15 +79,16 @@ jobs:
           name: Build Output
           path: ${{ steps.build.outputs.build-output }}
 
-      # Pushing a tag like v1.0.0 publishes a GitHub Release with the .geode file.
+      # Publishes a GitHub Release with the .geode file, either from a pushed
+      # tag like v1.0.0 or from a manual run with "release" ticked.
       - name: Publish release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.release
         env:
           GH_TOKEN: ${{ github.token }}
           BUILD_OUTPUT: ${{ steps.build.outputs.build-output }}
         run: |
           version=$(jq -r .version mod.json)
-          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+          if [ "$GITHUB_REF_TYPE" = "tag" ] && [ "$version" != "$GITHUB_REF_NAME" ]; then
             echo "::error::Tag $GITHUB_REF_NAME doesn't match mod.json version $version"
             exit 1
           fi
@@ -91,6 +97,7 @@ jobs:
             echo "::error::No .geode file found in $BUILD_OUTPUT"
             exit 1
           fi
-          gh release create "$GITHUB_REF_NAME" "${files[@]}" \
-            --title "Wave Helper $GITHUB_REF_NAME" \
+          gh release create "$version" "${files[@]}" \
+            --target "$GITHUB_SHA" \
+            --title "Wave Helper $version" \
             --notes-file changelog.md
