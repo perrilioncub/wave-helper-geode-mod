@@ -1,0 +1,70 @@
+{
+	"geode": "5.11.2",
+	"gd": {
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
+	},
+	"id": "perrilioncub.wave-helper",
+	"name": "Wave Helper",
+	"version": "v1.0.0",
+	"developer": "perrilioncub",
+	"description": "Turn a wave floor into its ceiling (or back) in one click, with the slope hitboxes facing the right way.",
+	"links": {
+		"source": "https://github.com/perrilioncub/wave-helper-geode-mod"
+	},
+	"tags": ["editor", "utility"],
+	"resources": {
+		"spritesheets": {
+			"WaveHelperSheet": [
+				"resources/sheet/*.png"
+			]
+		}
+	},
+	"settings": {
+		"gap": {
+			"type": "float",
+			"name": "Starting Gap",
+			"description": "How many blocks apart the new ceiling (or floor) starts from the original. You can drag it anywhere afterwards since it stays selected.",
+			"default": 3.0,
+			"min": 0.0,
+			"max": 100.0,
+			"control": {
+				"arrows": true,
+				"arrow-step": 0.5,
+				"big-arrows": true,
+				"big-arrow-step": 5.0,
+				"slider": false,
+				"input": true
+			}
+		},
+		"direction": {
+			"type": "string",
+			"name": "Direction",
+			"description": "<cy>Auto</c> looks at the slopes you selected: if they're a floor it makes a ceiling, if they're a ceiling it makes a floor. Flat selections with no slopes are treated as a floor.",
+			"default": "Auto",
+			"one-of": ["Auto", "Floor to ceiling", "Ceiling to floor"]
+		},
+		"orientation": {
+			"type": "string",
+			"name": "Non-Slope Objects",
+			"description": "How blocks and decorations are turned when mirrored. <cy>Rotate 180</c> matches what happens to slopes, so detail that follows a slope stays lined up with it. <cy>Flip vertically</c> keeps left and right the same. Slopes are always rotated 180, since that's what fixes their hitboxes.",
+			"default": "Rotate 180",
+			"one-of": ["Rotate 180", "Flip vertically"]
+		},
+		"include-triggers": {
+			"type": "bool",
+			"name": "Copy Triggers",
+			"description": "Also copy triggers and start positions in the selection. Off by default so you don't end up with every trigger firing twice.",
+			"default": false
+		},
+		"mirror-keybind": {
+			"type": "keybind",
+			"name": "Mirror Shortcut",
+			"description": "Keyboard shortcut for the Mirror button in the editor.",
+			"default": "Alt+M",
+			"category": "editor"
+		}
+	}
+}
