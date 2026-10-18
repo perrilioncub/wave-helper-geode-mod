@@ -12,7 +12,7 @@ jobs:
     name: Geometry tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Build and run tests
         run: |
           cmake -S tests -B build-tests
@@ -46,7 +46,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
@@ -63,7 +63,7 @@ jobs:
       - uses: geode-sdk/build-geode-mod/combine@main
         id: build
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Build Output
           path: ${{ steps.build.outputs.build-output }}
